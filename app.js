@@ -11,7 +11,7 @@ const request = require('request');
 
 app.use(express.static("public"));
 
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.listen(3000, function () {
     console.log('listening on port 3000');
@@ -42,19 +42,21 @@ app.post('/', function (req, res) {
 
     const jsonData = JSON.stringify(data);
 
-    const url = "https://us21.api.,ailchimp.com/3.0/lists/bf207e9252";
+    const url = "https://us21.api.mailchimp.com/3.0/lists/bf207e9252";
 
     const options = {
         method: "POST",
         auth: "zach1:4b8d678e897e0eba2b4ad7b29c896963-us21"
     }
 
-    https.request(url, options, function(response){
-        response.on("data", function(data){
+    const request = https.request(url, options, function (response) {
+        response.on("data", function (data) {
             console.log(JSON.parse(data));
         });
     })
 
+    request.write(jsonData);
+    request.end();
     console.log(firstName);
     console.log(lastName);
     console.log(email);
